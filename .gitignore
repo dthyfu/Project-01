@@ -1,0 +1,45 @@
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# SQLite
+*.sqlite3
+*.db
+*.sqlite
+
+# Cache and generated files
+cache/
+__pycache__/
+*.pyc
+
+# Model files
+*.pt
+*.pth
+*.h5
+*.keras
+*.onnx
+
+# OS
+.DS_Store
+Thumbs.db

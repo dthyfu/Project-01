@@ -1,0 +1,8 @@
+{
+  "evaluated_questions": 8,
+  "skipped_questions": 0,
+  "hit_rate_at_5": 0.5,
+  "recall_at_5": 0.4688,
+  "mrr_at_5": 0.4167,
+  "note": "Nhãn liên quan được tạo từ từ khóa tiêu đề; cần rà soát trước khi dùng làm kết quả khoa học."
+}

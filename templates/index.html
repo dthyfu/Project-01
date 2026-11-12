@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8f9fb">
+    <title>Diabetes Research AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <a class="brand" href="/" aria-label="Diabetes Research AI">
+                    <span class="brand-mark">D</span>
+                    <span>Diabetes Research AI</span>
+                </a>
+                <button class="icon-button mobile-close" id="closeSidebar" aria-label="Đóng thanh bên">×</button>
+                <button class="new-chat" id="newChat"><span>＋</span> Cuộc trò chuyện mới</button>
+                <div class="history-heading">Gần đây</div>
+                <nav class="history-list" id="historyList" aria-label="Lịch sử hội thoại"></nav>
+            </div>
+            <div class="sidebar-bottom">
+                <div class="local-status"><span class="status-dot" id="healthDot"></span><span id="healthText">Đang kiểm tra hệ thống</span></div>
+                <div class="user-card"><span class="user-avatar">DR</span><span><strong>Không gian nghiên cứu</strong><small>Chạy cục bộ</small></span></div>
+            </div>
+        </aside>
+
+        <main class="main-panel">
+            <header class="topbar">
+                <button class="icon-button menu-button" id="openSidebar" aria-label="Mở thanh bên">☰</button>
+                <div class="topbar-title">Diabetes Research AI <span class="model-badge">Local</span></div>
+                <div class="topbar-spacer"></div>
+            </header>
+
+            <div class="chat-workspace">
+                <aside class="prediction-panel" aria-labelledby="predictionTitle">
+                    <h2 id="predictionTitle">Ước tính nguy cơ</h2>
+                    <p class="prediction-note">Dựa trên dataset cục bộ · không thay thế chẩn đoán</p>
+                    <form id="riskForm" class="risk-form">
+                        <label>Tuổi <input name="age" type="number" min="1" max="120" step="1" required></label>
+                        <label>Giới tính
+                            <select name="gender" required><option value="Female">Nữ</option><option value="Male">Nam</option><option value="Other">Khác</option></select>
+                        </label>
+                        <label>BMI <input name="bmi" type="number" min="10" max="100" step="0.1" required></label>
+                        <label>HbA1c (%) <input name="HbA1c_level" type="number" min="2" max="20" step="0.1" required></label>
+                        <label>Đường huyết (mg/dL) <input name="blood_glucose_level" type="number" min="20" max="600" step="1" required></label>
+                        <label>Đường huyết đo lúc đói?
+                            <select name="fasting_status"><option value="unknown">Không rõ/không</option><option value="yes">Có, nhịn ăn ít nhất 8 giờ</option></select>
+                        </label>
+                        <label>Tăng huyết áp
+                            <select name="hypertension"><option value="0">Không</option><option value="1">Có</option></select>
+                        </label>
+                        <label>Bệnh tim
+                            <select name="heart_disease"><option value="0">Không</option><option value="1">Có</option></select>
+                        </label>
+                        <label>Tiền sử hút thuốc
+                            <select name="smoking_history">
+                                <option value="No Info">Không rõ</option><option value="never">Chưa từng</option>
+                                <option value="former">Đã từng</option><option value="current">Đang hút</option>
+                                <option value="not current">Hiện không hút</option><option value="ever">Từng hút</option>
+                            </select>
+                        </label>
+                        <button class="risk-submit" type="submit">Tính ước tính</button>
+                    </form>
+                    <div id="riskResult" class="risk-result hidden" aria-live="polite"></div>
+                    <p class="prediction-disclaimer">Mô hình học từ dữ liệu mẫu, có thể sai lệch và không dùng để tự chẩn đoán hay quyết định điều trị.</p>
+                </aside>
+                <div class="conversation-column">
+            <section class="chat-scroll" id="chatScroll">
+                <div class="welcome" id="welcome">
+                    <div class="welcome-mark">D</div>
+                    <h1>Bạn muốn tìm hiểu điều gì?</h1>
+                    <p>Tra cứu và tổng hợp thông tin nghiên cứu về bệnh tiểu đường.</p>
+                    <div class="suggestion-grid" id="suggestions">
+                        <button class="suggestion" data-question="Bệnh tiểu đường là gì?">Bệnh tiểu đường là gì?</button>
+                        <button class="suggestion" data-question="Tiểu đường type 1 và type 2 khác nhau thế nào?">So sánh type 1 và type 2</button>
+                        <button class="suggestion" data-question="Người mắc tiểu đường nên lưu ý gì về dinh dưỡng?">Dinh dưỡng và tiểu đường</button>
+                        <button class="suggestion" data-question="Tiểu đường có thể gây ra những biến chứng nào?">Tìm hiểu về biến chứng</button>
+                    </div>
+                </div>
+                <div class="messages" id="messages" aria-live="polite"></div>
+            </section>
+
+            <div class="composer-wrap">
+                <div class="activity hidden" id="activity" aria-live="polite"></div>
+                <form class="composer" id="chatForm">
+                    <textarea id="question" rows="1" maxlength="12000" placeholder="Nhắn tin về bệnh tiểu đường..." aria-label="Nhập câu hỏi"></textarea>
+                    <button class="send-button" id="sendButton" type="submit" aria-label="Gửi câu hỏi">↑</button>
+                </form>
+                <p class="disclaimer">Thông tin chỉ nhằm mục đích tham khảo, không thay thế tư vấn của nhân viên y tế.</p>
+            </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
